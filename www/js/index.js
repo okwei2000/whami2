@@ -114,6 +114,14 @@ var app = {
 
         // If you wish to turn OFF background-tracking, call the #stop method.
         // bgGeo.stop()
-    }
+    },
+	
+	startTracking: function(){
+		app.configureBackgroundGeoLocation();
+	},
+	
+	stopTracking: function(){
+		bgGeo.stop()
+	}
 
 };
