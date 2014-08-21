@@ -121,6 +121,7 @@ var app = {
 	},
 	
 	stopTracking: function(){
+		var bgGeo = window.plugins.backgroundGeoLocation;
 		bgGeo.stop()
 	}
 
