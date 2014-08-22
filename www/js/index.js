@@ -49,7 +49,7 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
-		$('#app').hide();
+		$('.app').hide();
 		$('#whami').show();
 		
         console.log('Received Event: ' + id);
