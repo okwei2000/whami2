@@ -35,9 +35,9 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
 
-        if (window.plugins.backgroundGeoLocation) {
-            app.configureBackgroundGeoLocation();
-        }
+        //if (window.plugins.backgroundGeoLocation) {
+        //    app.configureBackgroundGeoLocation();
+        //}
 
     },
     // Update DOM on a Received Event
@@ -49,6 +49,9 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
+		$('#app').hide();
+		$('#whami').show();
+		
         console.log('Received Event: ' + id);
     },
     configureBackgroundGeoLocation: function() {

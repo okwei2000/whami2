@@ -22,7 +22,7 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Hello World</title>
     </head>
@@ -33,9 +33,18 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
-			<input id="start" type="button" style="width:400px;height:50px" value="start" onclick="app.startTracking()"/>
-			<input id="stop" type="button" style="width:400px;height:50px" value="Stop" onclick="app.stopTracking()"/>
         </div>
+		<div id="whami" style="display:none">
+			<div style="margin-left: 45%; font-size:30px">WHAMI 2</div>
+			<div style="margin: 0px 5%">
+				<span style="font-size:30px">API KEY:</span>
+				<input id="apikey" type="text" style="width:100%;height:50px;font-size:30px"/>
+				<br>
+				<input id="start" type="button" style="width:100%;height:50px;font-size:30px" value="Start Tracking" onclick="app.startTracking()"/>
+				<input id="stop" type="button" style="width:100%;height:50px;font-size:30px" value="Stop Tracking" onclick="app.stopTracking()"/>		
+			</div>
+		</div>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
