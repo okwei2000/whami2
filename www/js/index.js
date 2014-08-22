@@ -136,6 +136,10 @@ var app = {
 		$('#apikey').removeAttr("disabled");
 	},
 	
+	registerNotification: function(){
+		var pushNotification = window.plugins.pushNotification;
+		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"541265057364","ecb":"app.onNotificationGCM"});
+	},
 	// result contains any message sent from the plugin call
 	successHandler: function(result) {
 		alert('Callback Success! Result = '+result)
@@ -144,19 +148,33 @@ var app = {
 		alert(error);
 	},
 	onNotificationGCM: function(e) {
-        switch( e.event )
-        {
+        switch( e.event ){
             case 'registered':
-                if ( e.regid.length > 0 )
-                {
+                if ( e.regid.length > 0 ){
                     console.log("Regid " + e.regid);
-                    alert('registration id = '+e.regid);
+                    //alert('registration id = '+e.regid);
+					$.ajax({
+						url: 'http://qdevinc.com/test/requestDump',
+						type: "POST",
+						dataType: 'json',
+						cache: false,
+						data: JSON.stringify({registerId:e.regid}),
+						contentType: "application/json; charset=utf-8",
+						success: function( data, textStatus, jqXHR ){
+							alert('registration id = '+e.regid);
+						},
+						error: function(jqXHR, textStatus, errorThrown){
+						},
+						complete: function( jqXHR, textStatus ){
+						}
+					});
                 }
             break;
  
             case 'message':
               // this is the actual push notification. its format depends on the data model from the push server
               alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+			  app.startTracking();
             break;
  
             case 'error':
