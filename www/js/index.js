@@ -17,6 +17,7 @@
  * under the License.
  */
 var app = {
+	apikey: "",
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -120,12 +121,19 @@ var app = {
     },
 	
 	startTracking: function(){
-		app.configureBackgroundGeoLocation();
+		if($.trim($('#apikey').val()).length==0){
+			alert("You must enter an API key");
+		}else{
+			app.apikey=$.trim($('#apikey').val());
+			$('#apikey').attr("disabled", true);
+			app.configureBackgroundGeoLocation();
+		}
 	},
 	
 	stopTracking: function(){
 		var bgGeo = window.plugins.backgroundGeoLocation;
-		bgGeo.stop()
+		bgGeo.stop();
+		$('#apikey').removeAttr("disabled");
 	}
 
 };
