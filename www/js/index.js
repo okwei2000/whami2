@@ -36,10 +36,14 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
 
-        //if (window.plugins.backgroundGeoLocation) {
-        //    app.configureBackgroundGeoLocation();
-        //}
-
+        if (window.plugins.backgroundGeoLocation) {
+            app.configureBackgroundGeoLocation();
+        }
+		
+		if(window.plugins.pushNotification){
+			var pushNotification = window.plugins.pushNotification;
+			pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"541265057364","ecb":"app.onNotificationGCM"});
+		}
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -52,9 +56,6 @@ var app = {
 
 		$('.app').hide();
 		$('#whami').show();
-		
-		var pushNotification = window.plugins.pushNotification;
-		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"541265057364","ecb":"app.onNotificationGCM"});
 		
         console.log('Received Event: ' + id);
     },
@@ -115,12 +116,6 @@ var app = {
             activityType: "AutomotiveNavigation",       // <-- iOS-only
             debug: true     // <-- enable this hear sounds for background-geolocation life-cycle.
         });
-
-        // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
-        bgGeo.start();
-
-        // If you wish to turn OFF background-tracking, call the #stop method.
-        // bgGeo.stop()
     },
 	
 	startTracking: function(){
@@ -129,7 +124,9 @@ var app = {
 		}else{
 			app.apikey=$.trim($('#apikey').val());
 			$('#apikey').attr("disabled", true);
-			app.configureBackgroundGeoLocation();
+			// Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
+			var bgGeo = window.plugins.backgroundGeoLocation;
+			bgGeo.start();
 		}
 	},
 	
