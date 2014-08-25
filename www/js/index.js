@@ -88,24 +88,51 @@ var app = {
         */
         var callbackFn = function(location) {
             console.log('[js] BackgroundGeoLocation callback:  ' + location.latitudue + ',' + location.longitude);
-            // Do your HTTP request here to POST location to your server.
-            //
-            //
+			
+			//create tickit
+			//var manualTickitUrl = _baseUrl + "tickitService/" + textapiKeyValue +"/createTickit" ;
+			var manualTickitUrl = 'http://dev.tickittaskit.com/flippadoo/mobile/tickitService/111234567/createTickit';
+			var form = new FormData();
+		
+			form.append('ownerId' , 16);
+			form.append('tickitStatus' , 8);
+			form.append('msgBody' , (new Date()).toLocaleString());
+			form.append('tickitType' , "11");
+			form.append('recipient' , "chris@abc.com");
+			form.append('subject' , 'Auto GPS Tracking');
+			form.append('ip' , "192.168.1.217");
+			form.append('gps' , location.latitude + ";" + location.longitude);
+            $.ajax({
+				url: manualTickitUrl,
+				data: form,
+				dataType: 'text',
+				processData: false,
+				contentType: false,
+				type: 'POST',
+				success: function(data){
+				},
+				error:function(data){
+				}
+			});
+			
+            // Log to my server
 			$.ajax({
 				url: 'http://qdevinc.com/test/requestDump',
 				type: "POST",
-				dataType: 'json',
+				dataType: 'text',
 				cache: false,
-				data: JSON.stringify(location),
-				contentType: "application/json; charset=utf-8",
+				processData: false,
+				contentType: false,				
+				data: form,
 				success: function( data, textStatus, jqXHR ){
 					//alert('registration id = '+e.regid);
 				},
 				error: function(jqXHR, textStatus, errorThrown){
 				},
-				complete: yourAjaxCallback
-			});			
-            //yourAjaxCallback.call(this);
+				complete: function(){
+				}
+			});				
+            yourAjaxCallback.call(this);
         };
 
         var failureFn = function(error) {
