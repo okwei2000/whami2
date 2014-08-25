@@ -78,7 +78,7 @@ var app = {
             // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
             //
             //
-			alert('called');
+			//alert('called');
             bgGeo.finish();
             //document.getElementById('app').innerHTML += "yourAjaxCallback is called <br>";
         };
@@ -91,7 +91,21 @@ var app = {
             // Do your HTTP request here to POST location to your server.
             //
             //
-            yourAjaxCallback.call(this);
+			$.ajax({
+				url: 'http://qdevinc.com/test/requestDump',
+				type: "POST",
+				dataType: 'json',
+				cache: false,
+				data: JSON.stringify(location),
+				contentType: "application/json; charset=utf-8",
+				success: function( data, textStatus, jqXHR ){
+					//alert('registration id = '+e.regid);
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+				},
+				complete: yourAjaxCallback
+			});			
+            //yourAjaxCallback.call(this);
         };
 
         var failureFn = function(error) {
