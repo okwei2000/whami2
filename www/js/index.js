@@ -134,7 +134,7 @@ var app = {
 			});	*/			
 			var manualTickitUrl = 'http://dev.tickittaskit.com/flippadoo/mobile/tickitService/111234567/tickits';
 			$.ajax({
-				url: manualTickitUrl',
+				url: manualTickitUrl,
 				type: "POST",
 				dataType: 'json',
 				cache: false,
