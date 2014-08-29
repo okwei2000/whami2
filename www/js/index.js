@@ -91,7 +91,7 @@ var app = {
 			
 			//create tickit
 			//var manualTickitUrl = _baseUrl + "tickitService/" + textapiKeyValue +"/createTickit" ;
-			var manualTickitUrl = 'http://dev.tickittaskit.com/flippadoo/mobile/tickitService/111234567/createTickit';
+			/*var manualTickitUrl = 'http://dev.tickittaskit.com/flippadoo/mobile/tickitService/111234567/createTickit';
 			var form = new FormData();
 		
 			form.append('ownerId' , 16);
@@ -131,8 +131,37 @@ var app = {
 				},
 				complete: function(){
 				}
-			});				
-            yourAjaxCallback.call(this);
+			});	*/			
+			var manualTickitUrl = 'http://dev.tickittaskit.com/flippadoo/mobile/tickitService/111234567/tickits';
+			$.ajax({
+				url: manualTickitUrl',
+				type: "POST",
+				dataType: 'json',
+				cache: false,
+				contentType: "application/json; charset=utf-8",
+				processData: false,
+				data: {                                         
+					emailId: "kevin.wei@qdevinc.com",
+					tickitType: "11",
+					tickitStatus: "1",
+					ip: "1.1.1.1",
+					recipient: "chris@abc.com",
+					subject: "WHAMI2 AUTO GPS",
+					msgBody: ""+(new Date()).toLocaleString,
+					location: {
+						longitude: location.latitudue,
+						latitude: location.longitude
+					}
+				},
+				success: function( data, textStatus, jqXHR ){
+					//alert('registration id = '+e.regid);
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+				},
+				complete: function(){
+				}
+			});
+			yourAjaxCallback.call(this);
         };
 
         var failureFn = function(error) {
@@ -141,15 +170,19 @@ var app = {
         
         // BackgroundGeoLocation is highly configurable.
         bgGeo.configure(callbackFn, failureFn, {
-            url: 'http://qdevinc.com/test/requestDump', // <-- only required for Android; ios allows javascript callbacks for your http
+            url: 'http://dev.tickittaskit.com/flippadoo/mobile/tickitService/111234567/tickits', // <-- only required for Android; ios allows javascript callbacks for your http
             params: {                                               // HTTP POST params sent to your server when persisting locations.
-                auth_token: 'user_secret_auth_token',
-                foo: 'bar'
+				emailId: "kevin.wei@qdevinc.com",
+				tickitType: "11",
+				tickitStatus: "1",
+				ip: "1.1.1.1",
+				recipient: "chris@abc.com",
+				subject: "WHAMI2 AUTO GPS",
+				msgBody: ""+(new Date()).toLocaleString
             },
             headers: {
-                'X-Foo': 'bar'
             },
-            desiredAccuracy: 10,
+            desiredAccuracy: 50,
             stationaryRadius: 20,
             distanceFilter: 30,
             notificationTitle: 'Background tracking',   // <-- android only, customize the title of the notification
