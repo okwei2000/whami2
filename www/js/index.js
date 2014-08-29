@@ -18,6 +18,7 @@
  */
 var app = {
 	apikey: "",
+	email: "",
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -37,12 +38,11 @@ var app = {
         app.receivedEvent('deviceready');
 
         if (window.plugins.backgroundGeoLocation) {
-            app.configureBackgroundGeoLocation();
+            //app.configureBackgroundGeoLocation();
         }
 		
 		if(window.plugins.pushNotification){
 			var pushNotification = window.plugins.pushNotification;
-			pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"541265057364","ecb":"app.onNotificationGCM"});
 		}
     },
     // Update DOM on a Received Event
@@ -59,6 +59,30 @@ var app = {
 		
         console.log('Received Event: ' + id);
     },
+	
+	login: function(){
+		if($.trim($('#apikey').val()).length==0 || $.trim($('#email').val()).length==0){
+			alert("You must enter an Email and an API key");
+			return;
+		}else{
+			app.apikey=$.trim($('#apikey').val());	
+			app.email=$.trim($('#email').val());
+			
+			$('#apikey').attr("disabled", true);
+			$('#email').attr("disabled", true);
+			$('#login').attr("disabled", true);
+			
+			app.configureBackgroundGeoLocation();
+			pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"541265057364","ecb":"app.onNotificationGCM"});
+		}
+	},
+	logout: function(){	
+		$('#apikey').removeAttr("disabled");
+		$('#email').removeAttr("disabled");
+		$('#login').removeAttr("disabled");
+		app.stopTracking();
+	},
+	
     configureBackgroundGeoLocation: function() {
         // Your app must execute AT LEAST ONE call for the current position via standard Cordova geolocation,
         //  in order to prompt the user for Location permission.
@@ -77,8 +101,6 @@ var app = {
             //  and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
             // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
             //
-            //
-			//alert('called');
             bgGeo.finish();
             //document.getElementById('app').innerHTML += "yourAjaxCallback is called <br>";
         };
@@ -178,7 +200,7 @@ var app = {
 				ip: "1.1.1.1",
 				recipient: "chris@abc.com",
 				subject: "WHAMI2 AUTO GPS",
-				msgBody: ""+(new Date()).toLocaleString()
+				msgBody: "Created Automatically from Android"
             },
             headers: {
             },
@@ -193,21 +215,14 @@ var app = {
     },
 	
 	startTracking: function(){
-		if($.trim($('#apikey').val()).length==0){
-			alert("You must enter an API key");
-		}else{
-			app.apikey=$.trim($('#apikey').val());
-			$('#apikey').attr("disabled", true);
-			// Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
-			var bgGeo = window.plugins.backgroundGeoLocation;
-			bgGeo.start();
-		}
+		// Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
+		var bgGeo = window.plugins.backgroundGeoLocation;
+		bgGeo.start();
 	},
 	
 	stopTracking: function(){
 		var bgGeo = window.plugins.backgroundGeoLocation;
 		bgGeo.stop();
-		$('#apikey').removeAttr("disabled");
 	},
 	
 	registerNotification: function(){

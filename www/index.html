@@ -34,14 +34,37 @@
                 <p class="event received">Device is Ready</p>
             </div>
         </div>
-		<div id="whami" style="display:none">
-			<div style="margin-left: 35%; font-size:30px">WHAMI 2</div>
-			<div style="margin: 0px 5%">
+		<div id="whami" style="display:none; margin-top:5%">
+			<div style="margin-left: 40%; font-size:30px">WHAMI 2</div>
+
+			<fieldset id="user_fieldset" style="margin: 0px 5%">
+			<legend style="font-size:30px">User</legend>
+				<span style="font-size:30px">Email:</span>
+				<input id="email" type="text" style="width:100%;height:50px;font-size:30px"/>
 				<span style="font-size:30px">API KEY:</span>
-				<input id="apikey" type="number" style="width:100%;height:50px;font-size:30px;margin-bottom:30px"/>
+				<select id="apikey" style="width:100%;height:50px;font-size:30px;margin-bottom:30px"/>
+					<option>111234567</option>
+					<option>222234567</option>
+					<option>333234567</option>
+					<option>355901361</option>
+				</select>				
+				<input id="login" type="button" style="width:100%;height:50px;font-size:30px" value="Login" onclick="app.login()"/>
+				<input id="logout" type="button" style="width:100%;height:50px;font-size:30px" value="Logout" onclick="app.logout()"/>	
+			</fieldset>
+			
+			<fieldset id="gps_fieldset" style="margin: 0px 5%">
+			<legend style="font-size:30px">GPS Tracking</legend>				
 				<input id="start" type="button" style="width:100%;height:50px;font-size:30px" value="Start Tracking" onclick="app.startTracking()"/>
 				<input id="stop" type="button" style="width:100%;height:50px;font-size:30px" value="Stop Tracking" onclick="app.stopTracking()"/>		
-			</div>
+			</fieldset>
+			
+			<fieldset id="notification_fieldset" style="margin: 0px 5%">
+			<legend style="font-size:30px">Notification</legend>	
+<!--			
+				<input id="" type="button" style="width:100%;height:50px;font-size:30px" value="Start Tracking" onclick="app.startTracking()"/>
+				<input id="" type="button" style="width:100%;height:50px;font-size:30px" value="Stop Tracking" onclick="app.stopTracking()"/>		
+				-->
+			</fieldset>			
 		</div>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
