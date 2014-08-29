@@ -147,7 +147,7 @@ var app = {
 					ip: "1.1.1.1",
 					recipient: "chris@abc.com",
 					subject: "WHAMI2 AUTO GPS",
-					msgBody: ""+(new Date()).toLocaleString,
+					msgBody: ""+(new Date()).toLocaleString(),
 					location: {
 						longitude: location.latitudue,
 						latitude: location.longitude
@@ -178,7 +178,7 @@ var app = {
 				ip: "1.1.1.1",
 				recipient: "chris@abc.com",
 				subject: "WHAMI2 AUTO GPS",
-				msgBody: ""+(new Date()).toLocaleString
+				msgBody: ""+(new Date()).toLocaleString()
             },
             headers: {
             },
