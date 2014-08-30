@@ -78,19 +78,21 @@ var app = {
 			function(value) {
 				$('#email').val(value);
 			}, 
-			function(error) {alert(JSON.stringify(error));}
+			function(error){}
 		);
 		window.applicationPreferences.get("apikey", 
 			function(value) {
 				$('#apikey').val(value);
 			}, 
-			function(error) {alert(JSON.stringify(error));}
+			function(error){}
 		);
 		window.applicationPreferences.get("isloggedin", 
 			function(value) {
-				app.login();
+				if(value=="true"){
+					app.login();
+				}
 			}, 
-			function(error) {alert(JSON.stringify(error));}
+			function(error){}
 		);				
 	},
 	
@@ -124,12 +126,17 @@ var app = {
 		}
 	},
 	logout: function(){	
-		$('#apikey').removeAttr("disabled");
-		$('#email').removeAttr("disabled");
-		$('#login').removeAttr("disabled");
-		
-		$('#logout').attr("disabled", true);
-		app.stopTracking();
+		window.applicationPreferences.set("isloggedin", "false", 
+			function(){
+				$('#apikey').removeAttr("disabled");
+				$('#email').removeAttr("disabled");
+				$('#login').removeAttr("disabled");
+				
+				$('#logout').attr("disabled", true);
+				app.stopTracking();
+			}, 
+			function(error){alert("Error! " + JSON.stringify(error));}
+		);		
 	},
 	
     configureBackgroundGeoLocation: function() {
