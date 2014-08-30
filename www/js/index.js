@@ -69,12 +69,12 @@ var app = {
     },
 	
 	restoreUI: function(){
-		if(window.plugins.applicationPreferences){
+		if(window.applicationPreferences){
 			alert('here');
 		}else{
 			alert('not there');
 		}
-		window.plugins.applicationPreferences.get("email", function(value) {
+		window.applicationPreferences.get("email", function(value) {
 			$('#email').val(value);
 		}, function(error) {
 			alert(JSON.stringify(error));
