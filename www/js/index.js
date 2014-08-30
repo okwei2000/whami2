@@ -36,14 +36,15 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-
+		
+		/*
         if (window.plugins.backgroundGeoLocation) {
             //app.configureBackgroundGeoLocation();
         }
 		
 		if(window.plugins.pushNotification){
 			var pushNotification = window.plugins.pushNotification;
-		}
+		}*/
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -57,8 +58,18 @@ var app = {
 		$('.app').hide();
 		$('#whami').show();
 		
+		//restore UI
+		app.restoreUI();
         console.log('Received Event: ' + id);
     },
+	
+	restoreUI: function(){
+		window.plugins.applicationPreferences.get("email", function(value) {
+			$('#email').val(value);
+		}, function(error) {
+			//console.log(JSON.stringify(error));
+		});		
+	},
 	
 	login: function(){
 		if($.trim($('#apikey').val()).length==0 || $.trim($('#email').val()).length==0){
@@ -68,11 +79,23 @@ var app = {
 			app.apikey=$.trim($('#apikey').val());	
 			app.email=$.trim($('#email').val());
 			
+			window.applicationPreferences.set("apikey", $.trim($('#apikey').val()), function(){}, 
+				function(error){
+					alert("Error! " + JSON.stringify(error));
+				}
+			);
+			window.applicationPreferences.set("email", $.trim($('#email').val()), function(){}, 
+				function(error){
+					alert("Error! " + JSON.stringify(error));
+				}
+			);			
+			
 			$('#apikey').attr("disabled", true);
 			$('#email').attr("disabled", true);
 			$('#login').attr("disabled", true);
 			
 			app.configureBackgroundGeoLocation();
+			var pushNotification = window.plugins.pushNotification;
 			pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"541265057364","ecb":"app.onNotificationGCM"});
 		}
 	},
@@ -80,6 +103,8 @@ var app = {
 		$('#apikey').removeAttr("disabled");
 		$('#email').removeAttr("disabled");
 		$('#login').removeAttr("disabled");
+		
+		$('#logout').attr("disabled", true);
 		app.stopTracking();
 	},
 	
