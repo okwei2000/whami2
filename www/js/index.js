@@ -103,7 +103,7 @@ var app = {
 				function(){
 					window.applicationPreferences.set("email", $.trim($('#email').val()), 
 						function(){
-							window.applicationPreferences.set("isloggedin", "true"), 
+							window.applicationPreferences.set("isloggedin", "true", 
 								function(){
 									$('#apikey').attr("disabled", true);
 									$('#email').attr("disabled", true);
