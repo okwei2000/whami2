@@ -58,16 +58,26 @@ var app = {
 		$('.app').hide();
 		$('#whami').show();
 		
+		//prevent app exit from backbutton
+		document.addEventListener("backbutton", function(e){
+			e.preventDefault();
+			return false;	
+		});
 		//restore UI
 		app.restoreUI();
         console.log('Received Event: ' + id);
     },
 	
 	restoreUI: function(){
+		if(window.plugins.applicationPreferences){
+			alert('here');
+		}else{
+			alert('not there');
+		}
 		window.plugins.applicationPreferences.get("email", function(value) {
 			$('#email').val(value);
 		}, function(error) {
-			//console.log(JSON.stringify(error));
+			alert(JSON.stringify(error));
 		});		
 	},
 	
