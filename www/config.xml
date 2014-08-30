@@ -17,7 +17,7 @@
         Kevin Wei
     </author>
 
-	<preference name="AndroidLaunchMode" value="singleTop" />
+	<!--<preference name="AndroidLaunchMode" value="singleTop" />-->
 	<gap:config-file platform="android" parent="/manifest/application">
 		<activity android:launchMode="singleTop" />
 	</gap:config-file>	

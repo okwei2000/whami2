@@ -74,11 +74,24 @@ var app = {
 		}else{
 			alert('not there');
 		}
-		window.applicationPreferences.get("email", function(value) {
-			$('#email').val(value);
-		}, function(error) {
-			alert(JSON.stringify(error));
-		});		
+		window.applicationPreferences.get("email", 
+			function(value) {
+				$('#email').val(value);
+			}, 
+			function(error) {alert(JSON.stringify(error));}
+		);
+		window.applicationPreferences.get("apikey", 
+			function(value) {
+				$('#apikey').val(value);
+			}, 
+			function(error) {alert(JSON.stringify(error));}
+		);
+		window.applicationPreferences.get("isloggedin", 
+			function(value) {
+				app.login();
+			}, 
+			function(error) {alert(JSON.stringify(error));}
+		);				
 	},
 	
 	login: function(){
@@ -86,27 +99,28 @@ var app = {
 			alert("You must enter an Email and an API key");
 			return;
 		}else{
-			app.apikey=$.trim($('#apikey').val());	
-			app.email=$.trim($('#email').val());
-			
-			window.applicationPreferences.set("apikey", $.trim($('#apikey').val()), function(){}, 
-				function(error){
-					alert("Error! " + JSON.stringify(error));
-				}
+			window.applicationPreferences.set("apikey", $.trim($('#apikey').val()), 
+				function(){
+					window.applicationPreferences.set("email", $.trim($('#email').val()), 
+						function(){
+							window.applicationPreferences.set("isloggedin", "true"), 
+								function(){
+									$('#apikey').attr("disabled", true);
+									$('#email').attr("disabled", true);
+									$('#login').attr("disabled", true);
+									$('#logout').removeAttr("disabled");
+									
+									app.configureBackgroundGeoLocation();
+									app.registerNotification();
+								}, 
+								function(error){alert("Error! " + JSON.stringify(error));}
+							);
+						}, 
+						function(error){alert("Error! " + JSON.stringify(error));}
+					);
+				}, 
+				function(error){alert("Error! " + JSON.stringify(error));}
 			);
-			window.applicationPreferences.set("email", $.trim($('#email').val()), function(){}, 
-				function(error){
-					alert("Error! " + JSON.stringify(error));
-				}
-			);			
-			
-			$('#apikey').attr("disabled", true);
-			$('#email').attr("disabled", true);
-			$('#login').attr("disabled", true);
-			
-			app.configureBackgroundGeoLocation();
-			var pushNotification = window.plugins.pushNotification;
-			pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"541265057364","ecb":"app.onNotificationGCM"});
 		}
 	},
 	logout: function(){	
@@ -242,8 +256,8 @@ var app = {
             desiredAccuracy: 50,
             stationaryRadius: 20,
             distanceFilter: 30,
-            notificationTitle: 'Background tracking',   // <-- android only, customize the title of the notification
-            notificationText: 'ENABLED',                // <-- android only, customize the text of the notification
+            notificationTitle: 'WHAMI Tracking',   // <-- android only, customize the title of the notification
+            notificationText: 'Enabled',                // <-- android only, customize the text of the notification
             activityType: "AutomotiveNavigation",       // <-- iOS-only
             debug: true     // <-- enable this hear sounds for background-geolocation life-cycle.
         });
