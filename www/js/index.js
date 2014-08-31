@@ -70,7 +70,7 @@ var app = {
 	
 	restoreUI: function(){
 		if(window.applicationPreferences){
-			alert('here');
+			//alert('here');
 			window.applicationPreferences.set("test", 1, function(){
 				alert('here2');
 			}, function(){
