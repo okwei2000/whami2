@@ -117,8 +117,8 @@ var app = {
 			alert("You must enter an Email and an API key");
 			return;
 		}else{
-			window.localStorage.setItem("email", $.trim($('#email').val());
-			window.localStorage.setItem("apikey", $.trim($('#apikey').val());
+			window.localStorage.setItem("email", $.trim($('#email').val()));
+			window.localStorage.setItem("apikey", $.trim($('#apikey').val()));
 			window.localStorage.setItem("isloggedin", "true");
 			$('#apikey').attr("disabled", true);
 			$('#email').attr("disabled", true);
