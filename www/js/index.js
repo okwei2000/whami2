@@ -69,6 +69,7 @@ var app = {
     },
 	
 	restoreUI: function(){
+		/*
 		if(window.applicationPreferences){
 			//alert('here');
 			window.applicationPreferences.set("test", 1, function(){
@@ -98,7 +99,17 @@ var app = {
 				}
 			}, 
 			function(error){}
-		);				
+		);	*/	
+
+		if(window.localStorage){
+		}else{
+			alert('localStorage error');
+		}
+		$('#email').val(window.localStorage.getItem("email"));
+		$('#apikey').val(window.localStorage.getItem("apikey"));
+		if(window.localStorage.getItem("isloggedin")=="true"){
+			app.login();
+		}
 	},
 	
 	login: function(){
@@ -106,6 +117,17 @@ var app = {
 			alert("You must enter an Email and an API key");
 			return;
 		}else{
+			window.localStorage.setItem("email", $.trim($('#email').val());
+			window.localStorage.setItem("apikey", $.trim($('#apikey').val());
+			window.localStorage.setItem("isloggedin", "true");
+			$('#apikey').attr("disabled", true);
+			$('#email').attr("disabled", true);
+			$('#login').attr("disabled", true);
+			$('#logout').removeAttr("disabled");
+			
+			app.configureBackgroundGeoLocation();
+			app.registerNotification();
+			/*
 			window.applicationPreferences.set("apikey", $.trim($('#apikey').val()), 
 				function(){
 					window.applicationPreferences.set("email", $.trim($('#email').val()), 
@@ -128,9 +150,19 @@ var app = {
 				}, 
 				function(error){alert("Error! " + JSON.stringify(error));}
 			);
+			*/
 		}
 	},
 	logout: function(){	
+		window.localStorage.setItem("isloggedin", "false");
+		
+		$('#apikey').removeAttr("disabled");
+		$('#email').removeAttr("disabled");
+		$('#login').removeAttr("disabled");
+		
+		$('#logout').attr("disabled", true);
+		app.stopTracking();	
+		/*
 		window.applicationPreferences.set("isloggedin", "false", 
 			function(){
 				$('#apikey').removeAttr("disabled");
@@ -141,7 +173,8 @@ var app = {
 				app.stopTracking();
 			}, 
 			function(error){alert("Error! " + JSON.stringify(error));}
-		);		
+		);
+		*/		
 	},
 	
     configureBackgroundGeoLocation: function() {
