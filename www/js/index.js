@@ -337,16 +337,19 @@ var app = {
                     console.log("Regid " + e.regid);
                     //alert('registration id = '+e.regid);
 					$.ajax({
-						url: 'http://qdevinc.com/test/requestDump',
+						url: 'http://qdevinc.com/test/registerGCM',
 						type: "POST",
 						dataType: 'json',
 						cache: false,
-						data: JSON.stringify({registerId:e.regid}),
+						data: JSON.stringify({
+							email: $.trim($('#email').val()), 
+							registerId:e.regid
+						}),
 						contentType: "application/json; charset=utf-8",
 						success: function( data, textStatus, jqXHR ){
-							alert('registration id = '+e.regid);
 						},
 						error: function(jqXHR, textStatus, errorThrown){
+							alert('Error registering GCM, you will not receive notifications');
 						},
 						complete: function( jqXHR, textStatus ){
 						}
