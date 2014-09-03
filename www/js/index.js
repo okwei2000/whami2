@@ -413,6 +413,8 @@ var app = {
     },
 	// iOS
 	onNotificationAPN: function(event) {
+		alert(JSON.stringify(event));
+		app.startTracking();
 		if ( event.alert ){
 			navigator.notification.alert(event.alert);
 		}
