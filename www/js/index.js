@@ -17,8 +17,6 @@
  * under the License.
  */
 var app = {
-	apikey: "",
-	email: "",
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -36,7 +34,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-		
 		/*
         if (window.plugins.backgroundGeoLocation) {
             //app.configureBackgroundGeoLocation();
@@ -321,15 +318,25 @@ var app = {
 	
 	registerNotification: function(){
 		var pushNotification = window.plugins.pushNotification;
-		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"541265057364","ecb":"app.onNotificationGCM"});
+		if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
+			pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"541265057364","ecb":"app.onNotificationGCM"});
+		}else{
+			pushNotification.register(this.tokenHandler,this.errorHandler,{"badge":"true","sound":"true","alert":"true","ecb":"app.onNotificationAPN"});
+		}
 	},
 	// result contains any message sent from the plugin call
 	successHandler: function(result) {
 		alert('Callback Success! Result = '+result)
 	},	
 	errorHandler:function(error) {
-		alert(error);
+		alert('Error registering GCM, you will not receive notifications:'+error);
 	},
+	tokenHandler:function (result) {
+		// Your iOS push server needs to know the token before it can push to this device
+		// here is where you might want to send it the token for later use.
+		alert('device token = ' + result);
+	},	
+	//Android
 	onNotificationGCM: function(e) {
         switch( e.event ){
             case 'registered':
@@ -349,7 +356,7 @@ var app = {
 						success: function( data, textStatus, jqXHR ){
 						},
 						error: function(jqXHR, textStatus, errorThrown){
-							alert('Error registering GCM, you will not receive notifications');
+							alert('Error registering GCM ID with the server, you will not receive notifications');
 						},
 						complete: function( jqXHR, textStatus ){
 						}
@@ -360,16 +367,30 @@ var app = {
             case 'message':
               // this is the actual push notification. its format depends on the data model from the push server
               //alert('message = '+e.message+' msgcnt = '+e.msgcnt);
-			  app.startTracking();
+			  //app.startTracking();
             break;
- 
             case 'error':
               alert('GCM error = '+e.msg);
             break;
- 
             default:
               alert('An unknown GCM event has occurred');
-              break;
+            break;
         }
-    }	
+    },
+	// iOS
+	onNotificationAPN: function(event) {
+		if ( event.alert ){
+			navigator.notification.alert(event.alert);
+		}
+		if ( event.sound ){
+			var snd = new Media(event.sound);
+			snd.play();
+		}
+		if ( event.badge ){
+			pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+		}
+	},
+	sendNotification: function(){
+		
+	}
 };
