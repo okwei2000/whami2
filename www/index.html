@@ -43,7 +43,7 @@
 				<select id="email" type="text" style="width:100%;height:50px;font-size:30px"/>
 					<option>AlexHealy@nextworkitc.com</option>
 					<option>Alexhealyracing@gmail.com</option>
-					<option>Chris@abc.com</option>
+					<option selected>Chris@abc.com</option>
 					<option>Christopherhealy@outlook.com</option>
 					<option>Francie@abc.com</option>
 					<option>Sam@abc.com</option>
@@ -60,9 +60,9 @@
 					<option>kevin.wei@qdevinc.com</option>
 					<option>testuser@g.com</option>					
 				</select>
-				<span style="font-size:30px">API KEY:</span>
+				<span style="font-size:30px">API Key:</span>
 				<select id="apikey" style="width:100%;height:50px;font-size:30px;margin-bottom:30px"/>
-					<option>111234567</option>
+					<option selected>111234567</option>
 					<option>222234567</option>
 					<option>333234567</option>
 					<option>355901361</option>
@@ -73,18 +73,18 @@
 			
 			<fieldset id="gps_fieldset" style="margin: 0px 5%">
 			<legend style="font-size:30px">GPS Tracking</legend>				
-				<input id="start" type="button" style="width:100%;height:50px;font-size:30px" value="Start Tracking" onclick="app.startTracking()"/>
-				<input id="stop" type="button" style="width:100%;height:50px;font-size:30px" value="Stop Tracking" onclick="app.stopTracking()"/>		
+				<input id="gpsStart" type="button" style="width:100%;height:50px;font-size:30px" value="Start Tracking" onclick="app.startTracking()"/>
+				<input id="gpsStop" type="button" style="width:100%;height:50px;font-size:30px" value="Stop Tracking" onclick="app.stopTracking()"/>		
 			</fieldset>
 			
-			<fieldset id="notification_fieldset" style="margin: 0px 5%">
+			<fieldset id="notification_fieldset" style="margin: 0px 5%" disabled>
 			<legend style="font-size:30px">Notification</legend>
 				<span style="font-size:30px">Receiver:</span>
 				<select id="email" type="text" style="width:100%;height:50px;font-size:30px"/>
 					<option>AlexHealy@nextworkitc.com</option>
 					<option>Alexhealyracing@gmail.com</option>
 					<option>Chris@abc.com</option>
-					<option>Christopherhealy@outlook.com</option>
+					<option selected>Christopherhealy@outlook.com</option>
 					<option>Francie@abc.com</option>
 					<option>Sam@abc.com</option>
 					<option>Sid@abc.com</option>

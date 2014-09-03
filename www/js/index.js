@@ -106,6 +106,9 @@ var app = {
 		$('#apikey').val(window.localStorage.getItem("apikey"));
 		if(window.localStorage.getItem("isloggedin")=="true"){
 			app.login();
+			if(window.localStorage.getItem("isGPSOn")=="true"){
+				app.startTracking();
+			}
 		}
 	},
 	
@@ -121,6 +124,9 @@ var app = {
 			$('#email').attr("disabled", true);
 			$('#login').attr("disabled", true);
 			$('#logout').removeAttr("disabled");
+			$('#gpsStart').removeAttr("disabled");
+			$('#gpsStop').removeAttr("disabled");
+			$('#notification_fieldset').removeAttr("disabled");
 			
 			app.configureBackgroundGeoLocation();
 			app.registerNotification();
@@ -158,6 +164,8 @@ var app = {
 		$('#login').removeAttr("disabled");
 		
 		$('#logout').attr("disabled", true);
+		$('#gpsStart').attr("disabled" true);
+		$('#gpsStop').attr("disabled", true);		
 		app.stopTracking();	
 		/*
 		window.applicationPreferences.set("isloggedin", "false", 
@@ -309,11 +317,13 @@ var app = {
 		// Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
 		var bgGeo = window.plugins.backgroundGeoLocation;
 		bgGeo.start();
+		window.localStorage.setItem("isGPSOn", "true");
 	},
 	
 	stopTracking: function(){
 		var bgGeo = window.plugins.backgroundGeoLocation;
 		bgGeo.stop();
+		window.localStorage.setItem("isGPSOn", "false");
 	},
 	
 	registerNotification: function(){
@@ -329,12 +339,30 @@ var app = {
 		alert('Callback Success! Result = '+result)
 	},	
 	errorHandler:function(error) {
-		alert('Error registering GCM, you will not receive notifications:'+error);
+		alert('Error registering GCM/APN, you will not receive notifications:'+error);
 	},
 	tokenHandler:function (result) {
 		// Your iOS push server needs to know the token before it can push to this device
 		// here is where you might want to send it the token for later use.
-		alert('device token = ' + result);
+		//alert('device token = ' + result);
+		$.ajax({
+			url: 'http://qdevinc.com/test/registerAPN',
+			type: "POST",
+			dataType: 'json',
+			cache: false,
+			data: JSON.stringify({
+				email: $.trim($('#email').val()), 
+				deviceToken: result
+			}),
+			contentType: "application/json; charset=utf-8",
+			success: function( data, textStatus, jqXHR ){
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				alert('Error registering APN device token with the server, you will not receive notifications');
+			},
+			complete: function( jqXHR, textStatus ){
+			}
+		});		
 	},	
 	//Android
 	onNotificationGCM: function(e) {
