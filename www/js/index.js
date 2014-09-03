@@ -321,7 +321,7 @@ var app = {
 		if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
 			pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"541265057364","ecb":"app.onNotificationGCM"});
 		}else{
-			pushNotification.register(this.tokenHandler,this.errorHandler,{"badge":"true","sound":"true","alert":"true","ecb":"app.onNotificationAPN"});
+			pushNotification.register(app.tokenHandler,app.errorHandler,{"badge":"true","sound":"true","alert":"true","ecb":"app.onNotificationAPN"});
 		}
 	},
 	// result contains any message sent from the plugin call
