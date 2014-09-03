@@ -164,7 +164,7 @@ var app = {
 		$('#login').removeAttr("disabled");
 		
 		$('#logout').attr("disabled", true);
-		$('#gpsStart').attr("disabled" true);
+		$('#gpsStart').attr("disabled", true);
 		$('#gpsStop').attr("disabled", true);		
 		app.stopTracking();	
 		/*
