@@ -102,8 +102,12 @@ var app = {
 		}else{
 			alert('localStorage error');
 		}
-		$('#email').val(window.localStorage.getItem("email"));
-		$('#apikey').val(window.localStorage.getItem("apikey"));
+		if(window.localStorage.getItem("email")){
+			$('#email').val(window.localStorage.getItem("email"));
+		}
+		if(window.localStorage.getItem("apikey")){
+			$('#apikey').val(window.localStorage.getItem("apikey"));
+		}
 		if(window.localStorage.getItem("isloggedin")=="true"){
 			app.login();
 			if(window.localStorage.getItem("isGPSOn")=="true"){
@@ -165,7 +169,9 @@ var app = {
 		
 		$('#logout').attr("disabled", true);
 		$('#gpsStart').attr("disabled", true);
-		$('#gpsStop').attr("disabled", true);		
+		$('#gpsStop').attr("disabled", true);
+		
+		$('#notification_fieldset').attr("disabled", true);	
 		app.stopTracking();	
 		/*
 		window.applicationPreferences.set("isloggedin", "false", 
