@@ -427,6 +427,22 @@ var app = {
 		}
 	},
 	sendNotification: function(){
-		
+        $.ajax({
+            url: 'http://qdevinc.com/test/sendNotification',
+            type: "POST",
+            dataType: 'json',
+            cache: false,
+            data: JSON.stringify({
+                email: $.trim($('#receiverEmail').val())
+            }),
+            contentType: "application/json; charset=utf-8",
+            success: function( data, textStatus, jqXHR ){
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert('Unable to send notifications');
+            },
+            complete: function( jqXHR, textStatus ){
+            }
+        });		
 	}
 };
